@@ -24,33 +24,24 @@ public class Saucedemo {
 		driver.findElement(By.id("user-name")).sendKeys("standard_user");
 		driver.findElement(By.id("password")).sendKeys("secret_sauce");
 		driver.findElement(By.id("login-button")).click();
-	
-		List<WebElement> items = driver.findElements(By.className("inventory_item"));
-		driver.findElement(By.className("inventory_item_name")).click();
-		driver.findElement(By.cssSelector("button.btn_primary.btn_inventory")).click();
+		String firstProduct = driver.findElement(By.cssSelector(".inventory_item_name")).getText();
+		System.out.println("First Product Name: " + firstProduct);
+		String firstPrice = driver.findElement(By.cssSelector(".inventory_item_price")).getText();
+		System.out.println("First Product Price: " + firstPrice);
+		driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
 		driver.findElement(By.className("shopping_cart_link")).click();
-	
-		driver.findElement(By.className("btn_action checkout_button")).click();
+        driver.findElement(By.id("checkout")).click();
 		driver.findElement(By.id("first-name")).sendKeys("sinduja",Keys.ENTER);
 		driver.findElement(By.id("last-name")).sendKeys("Ravi",Keys.ENTER);
 		driver.findElement(By.id("postal-code")).sendKeys("600785",Keys.ENTER);
 		driver.findElement(By.id("CONTINUE")).click();
-		System.out.print("inventory_details_price");
-		 List<WebElement> list = driver.findElements(By.xpath("//span[@class='a-price-whole']"));
-		    for(int i=0; i<list.size(); i++) {
-		    	String text = list.get(i).getText();
-		    	System.out.println("Price Details = "+text);
-		    }
-		    File source = driver.getScreenshotAs(OutputType.FILE);
-		    File destination = new File("./screenShot/image.png");
-		    FileUtils.copyFile(source,destination);
-		    
-		    System.out.println("\nScreenShot saved at = "+destination.getAbsolutePath());
-		    
-		    driver.quit();
-		
+	    driver.findElement(By.id("finish")).click();
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File destFile = new File("confirmation_page.png"); 
+        FileUtils.copyFile(srcFile, destFile);
 
+        System.out.println("Screenshot saved at: " + destFile.getAbsolutePath());
+        driver.quit();
 
 	}
-
 }
